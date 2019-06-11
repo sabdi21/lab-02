@@ -28,7 +28,43 @@ body {
     margin: 20px;
   }
   
+  select {
+    position: center;
+    color: white;
+    padding: 10px;
+    font-size: 30px;
+    background-color: rgb(13, 197, 22);
+    border: inset 3px rgb(14, 8, 8);
+    border-radius: 10px;
+  }
   
+  select:hover {
+    background-color: rgb(221, 203, 209);
+    color: skyblue;
+  }
+  
+  main {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+  }
+  
+  #photo-template {
+    display: inline-block;
+  }
+  
+  div {
+    width: 25vw;
+    min-width: 250px;
+    padding: 1vw;
+    border:green outset 5px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    margin: 10 10px 5vw;
+    justify-content: space-around;
+  }
+  
+ 
 
 /* section > img {
     height: 100px;
