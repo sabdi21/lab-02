@@ -4,8 +4,6 @@ const photos = [];
 
 const keyword = [];
 
-const sortByKeyword = [];
-
 // ================ ITEM REFERENCES STORED IN A CONSTRUCTOR================
 function Photo(image) {
   this.image_url= image.image_url;
@@ -15,26 +13,10 @@ function Photo(image) {
   this.horns = image.horns;
 }
 
-//=================adding photos to the DOM=========================
-Photo.readJson = (page) => {
-
-  $.get(`data/page-${page}.json`)
-    .then(jsonPhotos => {
-
-      // adds new photos to the photo constructor array====
-      Photo.all = [];
-      jsonPhotos.forEach(photo => {
-        Photo.all.push(new Photo(photo))
-      });
-
-      Photo.all.forEach(photo => {
-        $('main').append(photo.render());
-      })
-    });
-
-
-}
 // =================== RENDERS PHOTOS TO THE DOM ==================
+let hornKeys = [];
+Photo.allPhotos = [];
+
 Photo.prototype.render = function() {
   const clone = $(`#photo-container`).clone();
 
@@ -55,6 +37,57 @@ function keywordList() {
     selectElement.append('<option>' + photo.keyword + '</option>')
   });
 }
+
+
+//=================adding photos to the DOM=========================
+Photo.readJson = () => {
+  $.get('data/page-1.json')
+    .then(data => {
+      data.forEach(obj => {
+        Photo.allPhotos.push(new Photo(obj));
+      });
+    })
+  $.get('data/page-2.json', 'json')
+    .then(data => {
+      data.forEach( obj => {
+        Photo.allPhotos.push(new Photo(obj));
+      });
+    })
+    .then(Photo.loadHorns);
+}
+
+$('#gal1').on('click', () => {
+  console.log('gal2');
+  runSwitch(1);
+})
+
+$('#gal2').on('click', () => {
+  console.log('gal1');
+  runSwitch(2);
+})
+
+const runSwitch = (gallery) => {
+  $('div').remove();
+  hornKeys = [];
+  $('option').not(':first').remove();
+  switch(gallery){
+    case 1: 
+    for(let i = 0; i < 20; i++){
+      Photo.allPhotos[i].render(i);
+      console.log('case 1');
+    }
+    break;
+    case 2:
+    for(let i = 20; i < 40; i++){
+      Photo.allPhotos[i].render(i);
+      console.log('case 2');
+    }
+  };
+}
+
+
+
+
 
 // Photo.prototype.render = function() {
 //   let photoTemplate = Handlebars.compile($('#photo').html());

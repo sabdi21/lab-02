@@ -2,13 +2,14 @@
 <html>
   <head>
     <title>The Gallery of Horns</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="css/reset.css"> -->
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Handlebars template for image goes here -->
-    <script type="text/x-handlebars-template">
+    <script id="photo-template" type="text/x-handlebars-template">
       <div id="photo" >
         <!-- added Handlebar template -->
         <h2>{{Keyword}}</h2>
@@ -18,8 +19,8 @@
         <p>{{{horns}}}</p>
       </div>
     </script>
-
   </head>
+
   <body>
     <header>
       <h1>The Gallery of Horns</h1>
@@ -34,8 +35,8 @@
         <option ></option>
       </select>
       <ul>
-        <li id="1">Page 1</li>
-        <li id="2">Page 2</li>
+        <li id="1">Gallery 1</li>
+        <li id="2">Gallery 2</li>
       </ul>
     </header>
     <main>
@@ -48,16 +49,18 @@
     </main>
     <footer>
       <ul>
-        <li id="2">Page 1</li>
-        <li id="1">Page 2</li>
+        <li id="2">Gallery 1</li>
+        <li id="1">Gallery 2</li>
       </ul>
-      <p>&copy; 2018 Code Fellows</p>
+      <p>&copy; 2019 Code Fellows</p>
     </footer>
 
     <!-- CDNs -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-
     <script src="js/app.js"></script>
+    <script src="js/page-2.js"></script>
+    <script src="js/handle.js"></script>
+    <script src="js/data.js"></script>
   </body>
 </html>
