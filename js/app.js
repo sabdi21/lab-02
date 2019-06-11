@@ -1,12 +1,12 @@
 // ============GLOBAL VARIABLES============================
 
-// const photos = [];
+const photos = [];
 
-// const keyword = [];
+const keyword = [];
 
 // ================ ITEM REFERENCES STORED IN A CONSTRUCTOR================
 function Photo(image) {
-  this.image_url= image.image_url; 
+  this.image_url= image.image_url;
   this.title= image.title;
   this.description= image.description;
   this.keyword= image.keyword;
@@ -15,16 +15,16 @@ function Photo(image) {
 
 //=================adding photos to the DOM=========================
 Photo.readJson = (page) => {
-  
-  $.get(`data/page-${page}.json`) 
+
+  $.get(`data/page-${page}.json`)
     .then(jsonPhotos => {
-  
+
       // adds new photos to the photo constructor array====
-      Photo.all = []; 
+      Photo.all = [];
       jsonPhotos.forEach(photo => {
         Photo.all.push(new Photo(photo))
       });
-  
+
       Photo.all.forEach(photo => {
         $('main').append(photo.render());
       })
@@ -35,7 +35,7 @@ Photo.readJson = (page) => {
 // =================== RENDERS PHOTOS TO THE DOM ==================
 Photo.prototype.render = function() {
   const clone = $(`#photo-container`).clone();
-  
+
   clone.removeAttr(`id`);
   clone.find(`h2`).text(this.title);
   clone.find(`img`).attr(`src`, this.image_url);
@@ -47,33 +47,19 @@ Photo.prototype.render = function() {
 }
 
 function keywordList() {
-  const keywordAarray= [];
-  // Photo.all = [];
+  const selectElement = $('#keyword-list');
 
-  // Photo.all.forEach(photo => {
-  //   keywordAarray.push(photo.keyword)
-  // });
-  // console.log(keywordAarray);
-  
-
-  const selectElement = $('#keyword-list').text();
-
-  selectElement.append("<option>");
-  // opt.removeAttr('id');
-  // opt.attr('value', 'test');
-  console.log($('select')[0])
-  $('select')[0].append(opt);
-  console.log('keyword list');
-
-  // keyword.all();
+  Photo.all.forEach(photo => {
+    selectElement.append('<option>' + photo.keyword + '</option>')
+  });
 }
 
 // Photo.prototype.render = function() {
 //   let photoTemplate = Handlebars.compile($('#photo').html());
- 
+
 //   return photoTemplate(this);
 // };
- 
+
 // }).then(() => {
 
 // });
