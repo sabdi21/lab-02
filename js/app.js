@@ -4,6 +4,8 @@ const photos = [];
 
 const keyword = [];
 
+const sortByKeyword = [];
+
 // ================ ITEM REFERENCES STORED IN A CONSTRUCTOR================
 function Photo(image) {
   this.image_url= image.image_url;
