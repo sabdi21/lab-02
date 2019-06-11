@@ -1,4 +1,36 @@
-section > img {
+body {
+    width: 90%;
+    margin: 0 auto;
+    background: silver;
+    font-family: 'Coiny', sans-serif;
+  }
+  
+  img {
+    width: 100%;
+    margin: 1vw 0;
+    border: rgb(255, 240, 158) inset 3px;
+    border-radius: 5px;
+  }
+
+  header {
+    margin: 10px 10vw 10vw;
+    
+  }
+  
+  a {
+    /* color: slateblue;
+    text-decoration: none; */
+  }
+  
+  h1 {
+    font-size: 60px;
+    text-align: center;
+    margin: 20px;
+  }
+  
+  
+
+/* section > img {
     height: 100px;
     width: 100px;
-}
+} */

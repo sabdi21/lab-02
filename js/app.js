@@ -1,61 +1,49 @@
-// ============GLOBAL VARIABLES============================
+'use strict';
 
-const photos = [];
-
-const keyword = [];
-
-// ================ ITEM REFERENCES STORED IN A CONSTRUCTOR================
-function Photo(image) {
-  this.image_url= image.image_url;
-  this.title= image.title;
-  this.description= image.description;
-  this.keyword= image.keyword;
-  this.horns = image.horns;
+function Horn(horn) {
+  this.name = horn.title;
+  this.imgurl = horn.image_url;
+  this.alt = horn.description;
+  this.class = horn.keyword;
+  this.horns = horn.horns;
 }
 
-// =================== RENDERS PHOTOS TO THE DOM ==================
-let photoKeys = [];
-Photo.allPhotos = [];
+let hornKeys= [];
+Horn.allHorns = [];
 
-Photo.prototype.render = function() {
-  const clone = $(`#photo-container`).clone();
+Horn.prototype.render = function(idx) {
+  $('main').append(`<div class="${this.class}" id="Horn${idx}"></div>`);
+  let hornClone = $(`#Horn${idx}`);
 
-  clone.removeAttr(`id`);
-  clone.find(`h2`).text(this.title);
-  clone.find(`img`).attr(`src`, this.image_url);
-  clone.find(`img`).attr(`alt`, this.title);
-  clone.find(`p`).html(this.description);
-  clone.attr(`data-keyword`, this.keyword);
-    if (!photoKeys.includes(this.class)){
-       photoKeys.push(this.class);
-        $('select').append(`<option value="${this.class}"> ${this.class} </option>`);
+  let hornHtml = $('#photo-template').html();
+
+  hornClone.html(hornHtml);
+
+  hornClone.find('h2').text(this.name);
+  hornClone.find('img').attr('src', this.imgurl);
+  hornClone.find('img').attr('class', this.class);
+  hornClone.find('img').attr('alt', this.alt);
+  hornClone.find('p').text(`Number of of horns: ${this.horns}`);
+  if (!hornKeys.includes(this.class)){
+    hornKeys.push(this.class);
+    $('select').append(`<option value="${this.class}"> ${this.class} </option>`);
   };
 }
 
-function keywordList() {
-  const selectElement = $('#keyword-list');
-
-  Photo.all.forEach(photo => {
-    selectElement.append('<option>' + photo.keyword + '</option>')
-  });
-}
-
-
-//=================adding photos to the DOM=========================
-Photo.readJson = () => {
-  $.get('data/page-1.json')
+Horn.readJson = () => {
+  $.get('data/page-1.json', 'json')
     .then(data => {
-      data.forEach(obj => {
-        Photo.allPhotos.push(new Photo(obj));
+      data.forEach( obj => {
+        Horn.allHorns.push(new Horn(obj));
       });
     })
   $.get('data/page-2.json', 'json')
     .then(data => {
       data.forEach( obj => {
-        Photo.allPhotos.push(new Photo(obj));
+        Horn.allHorns.push(new Horn(obj));
       });
     })
-    .then(Photo.loadPhotos);
+    .then(Horn.loadHorns);
 }
 
 $('#gal1').on('click', () => {
@@ -70,29 +58,29 @@ $('#gal2').on('click', () => {
 
 const runSwitch = (gallery) => {
   $('div').remove();
-  photoKeys = [];
+  hornKeys = [];
   $('option').not(':first').remove();
   switch(gallery){
     case 1: 
     for(let i = 0; i < 20; i++){
-      Photo.allPhotos[i].render(i);
+      Horn.allHorns[i].render(i);
       console.log('case 1');
     }
     break;
     case 2:
     for(let i = 20; i < 40; i++){
-      Photo.allPhotos[i].render(i);
+      Horn.allHorns[i].render(i);
       console.log('case 2');
     }
   };
 }
 
-Photo.loadPhotos = () => {
-  Photo.allPhotos.forEach( (photo, idx) => photo.render(idx));
+Horn.loadHorns = () => {
+  Horn.allHorns.forEach( (horn, idx) => horn.render(idx));
   runSwitch(1);
 };
 
-$(() =>   Photo.readJson());
+$(() =>   Horn.readJson());
 
 $('select').on('change', (selection) => {
   console.log($('select :selected').val());
@@ -106,15 +94,3 @@ $('select').on('change', (selection) => {
     };
   });
 });
-
-// ===== seting img width and height======
-
-
-// ==========when jQuery says document is ready then call function to load photo data=========
-$(document).ready(function() {
-  Photo.readJson(1);
-  keywordList();
-});
-
-
-// ANOTHER WAY TO WRITE ON READY FUNCTION ABOVE*********
