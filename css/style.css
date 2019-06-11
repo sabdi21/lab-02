@@ -50,7 +50,7 @@ body {
   }
   
   #photo-template {
-    display: inline-block;
+    display: none;
   }
   
   div {
