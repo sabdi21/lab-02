@@ -14,7 +14,7 @@ function Photo(image) {
 }
 
 // =================== RENDERS PHOTOS TO THE DOM ==================
-let hornKeys = [];
+let photoKeys = [];
 Photo.allPhotos = [];
 
 Photo.prototype.render = function() {
@@ -26,8 +26,10 @@ Photo.prototype.render = function() {
   clone.find(`img`).attr(`alt`, this.title);
   clone.find(`p`).html(this.description);
   clone.attr(`data-keyword`, this.keyword);
-
-  return clone;
+    if (!photoKeys.includes(this.class)){
+       photoKeys.push(this.class);
+        $('select').append(`<option value="${this.class}"> ${this.class} </option>`);
+  };
 }
 
 function keywordList() {
@@ -53,7 +55,7 @@ Photo.readJson = () => {
         Photo.allPhotos.push(new Photo(obj));
       });
     })
-    .then(Photo.loadHorns);
+    .then(Photo.loadPhotos);
 }
 
 $('#gal1').on('click', () => {
@@ -68,7 +70,7 @@ $('#gal2').on('click', () => {
 
 const runSwitch = (gallery) => {
   $('div').remove();
-  hornKeys = [];
+  photoKeys = [];
   $('option').not(':first').remove();
   switch(gallery){
     case 1: 
@@ -85,48 +87,25 @@ const runSwitch = (gallery) => {
   };
 }
 
+Photo.loadPhotos = () => {
+  Photo.allPhotos.forEach( (photo, idx) => photo.render(idx));
+  runSwitch(1);
+};
 
+$(() =>   Photo.readJson());
 
-
-
-// Photo.prototype.render = function() {
-//   let photoTemplate = Handlebars.compile($('#photo').html());
-
-//   return photoTemplate(this);
-// };
-
-// }).then(() => {
-
-// });
-
-
-//       // populate <select> element with options
-//       // based on keywords array
-
-//     }).then(() => {
-//
-//       // wire up an event handler that will listen
-//       // for the 'change' event
-//       // and show only photos that match selected value
-//       // should show all if on 'default' selection
-// $('select').on('change', function() {
-
-//   const selectedValue = $(this).val();
-
-//   if(selectedValue === 'default') {
-//     $('section').show();
-
-//   } else {
-//     $('section').hide();{
-
-//     }
-
-//   }
-// })
-// });
-//       });
-//     });
-// }
+$('select').on('change', (selection) => {
+  console.log($('select :selected').val());
+  const pictures = $('div').get();
+  console.log('horned pictures', pictures);
+  $('div').hide();
+  pictures.forEach( val => {
+    if(val.className === $('select :selected').val()){
+      console.log($(`div .${val.className}`));
+       $(`div.${val.className}`).show();
+    };
+  });
+});
 
 // ===== seting img width and height======
 
@@ -139,7 +118,3 @@ $(document).ready(function() {
 
 
 // ANOTHER WAY TO WRITE ON READY FUNCTION ABOVE*********
-// $(() => {
-//   Photo.readJson();
-// });
-// }
