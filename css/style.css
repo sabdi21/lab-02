@@ -1,5 +1,5 @@
 body {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     background: silver;
     font-family: 'Coiny', sans-serif;
@@ -60,7 +60,7 @@ body {
     border:green outset 5px;
     border-radius: 5px;
     background-color: whitesmoke;
-    margin: 10 10px 5vw;
+    margin: 5 10px 5vw;
     justify-content: space-around;
   }
   
