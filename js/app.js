@@ -1,5 +1,8 @@
 'use strict';
 
+let hornKeys= [];
+Horn.allHorns = [];
+
 function Horn(horn) {
   this.name = horn.title;
   this.imgurl = horn.image_url;
@@ -8,8 +11,6 @@ function Horn(horn) {
   this.horns = horn.horns;
 }
 
-let hornKeys= [];
-Horn.allHorns = [];
 
 Horn.prototype.render = function(idx) {
   $('main').append(`<div class="${this.class}" id="Horn${idx}"></div>`);
