@@ -1,110 +1,97 @@
-// ============GLOBAL VARIABLES============================
+'use strict';
 
-const photos = [];
+let hornKeys= [];
+Horn.allHorns = [];
 
-const keyword = [];
-
-// ================ ITEM REFERENCES STORED IN A CONSTRUCTOR================
-function Photo(image) {
-  this.image_url= image.image_url;
-  this.title= image.title;
-  this.description= image.description;
-  this.keyword= image.keyword;
-  this.horns = image.horns;
+function Horn(horn) {
+  this.name = horn.title;
+  this.imgurl = horn.image_url;
+  this.alt = horn.description;
+  this.class = horn.keyword;
+  this.horns = horn.horns;
 }
 
-//=================adding photos to the DOM=========================
-Photo.readJson = (page) => {
 
-  $.get(`data/page-${page}.json`)
-    .then(jsonPhotos => {
+Horn.prototype.render = function(idx) {
+  $('main').append(`<div class="${this.class}" id="Horn${idx}"></div>`);
+  let hornClone = $(`#Horn${idx}`);
 
-      // adds new photos to the photo constructor array====
-      Photo.all = [];
-      jsonPhotos.forEach(photo => {
-        Photo.all.push(new Photo(photo))
+  let hornHtml = $('#photo-template').html();
+
+  hornClone.html(hornHtml);
+
+  hornClone.find('h2').text(this.name);
+  hornClone.find('img').attr('src', this.imgurl);
+  hornClone.find('img').attr('class', this.class);
+  hornClone.find('img').attr('alt', this.alt);
+  hornClone.find('p').text(`Number of of horns: ${this.horns}`);
+  if (!hornKeys.includes(this.class)){
+    hornKeys.push(this.class);
+    $('select').append(`<option value="${this.class}"> ${this.class} </option>`);
+  };
+}
+
+Horn.readJson = () => {
+  $.get('data/page-1.json', 'json')
+    .then(data => {
+      data.forEach( obj => {
+        Horn.allHorns.push(new Horn(obj));
       });
-
-      Photo.all.forEach(photo => {
-        $('main').append(photo.render());
-      })
-    });
-
-
-}
-// =================== RENDERS PHOTOS TO THE DOM ==================
-Photo.prototype.render = function() {
-  const clone = $(`#photo-container`).clone();
-
-  clone.removeAttr(`id`);
-  clone.find(`h2`).text(this.title);
-  clone.find(`img`).attr(`src`, this.image_url);
-  clone.find(`img`).attr(`alt`, this.title);
-  clone.find(`p`).html(this.description);
-  clone.attr(`data-keyword`, this.keyword);
-
-  return clone;
+    })
+  $.get('data/page-2.json', 'json')
+    .then(data => {
+      data.forEach( obj => {
+        Horn.allHorns.push(new Horn(obj));
+      });
+    })
+    .then(Horn.loadHorns);
 }
 
-function keywordList() {
-  const selectElement = $('#keyword-list');
+$('#gal1').on('click', () => {
+  console.log('gal2');
+  runSwitch(1);
+})
 
-  Photo.all.forEach(photo => {
-    selectElement.append('<option>' + photo.keyword + '</option>')
+$('#gal2').on('click', () => {
+  console.log('gal1');
+  runSwitch(2);
+})
+
+const runSwitch = (gallery) => {
+  $('div').remove();
+  hornKeys = [];
+  $('option').not(':first').remove();
+  switch(gallery){
+    case 1: 
+    for(let i = 0; i < 20; i++){
+      Horn.allHorns[i].render(i);
+      console.log('case 1');
+    }
+    break;
+    case 2:
+    for(let i = 20; i < 40; i++){
+      Horn.allHorns[i].render(i);
+      console.log('case 2');
+    }
+  };
+}
+
+Horn.loadHorns = () => {
+  Horn.allHorns.forEach( (horn, idx) => horn.render(idx));
+  runSwitch(1);
+};
+
+$(() =>   Horn.readJson());
+
+$('select').on('change', (selection) => {
+  console.log($('select :selected').val());
+  const pictures = $('div').get();
+  console.log('horned pictures', pictures);
+  $('div').hide();
+  pictures.forEach( val => {
+    if(val.className === $('select :selected').val()){
+      console.log($(`div .${val.className}`));
+       $(`div.${val.className}`).show();
+    };
   });
-}
-
-// Photo.prototype.render = function() {
-//   let photoTemplate = Handlebars.compile($('#photo').html());
-
-//   return photoTemplate(this);
-// };
-
-// }).then(() => {
-
-// });
-
-
-//       // populate <select> element with options
-//       // based on keywords array
-
-//     }).then(() => {
-//
-//       // wire up an event handler that will listen
-//       // for the 'change' event
-//       // and show only photos that match selected value
-//       // should show all if on 'default' selection
-// $('select').on('change', function() {
-
-//   const selectedValue = $(this).val();
-
-//   if(selectedValue === 'default') {
-//     $('section').show();
-
-//   } else {
-//     $('section').hide();{
-
-//     }
-
-//   }
-// })
-// });
-//       });
-//     });
-// }
-
-// ===== seting img width and height======
-
-
-// ==========when jQuery says document is ready then call function to load photo data=========
-$(document).ready(function() {
-  Photo.readJson(1);
-  keywordList();
 });
-
-
-// ANOTHER WAY TO WRITE ON READY FUNCTION ABOVE*********
-// $(() => {
-//   Photo.readJson();
-// });
-// }

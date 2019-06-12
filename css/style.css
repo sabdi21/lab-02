@@ -1,4 +1,72 @@
-section > img {
+body {
+    width: 100%;
+    margin: 0 auto;
+    background: silver;
+    font-family: 'Coiny', sans-serif;
+  }
+  
+  img {
+    width: 100%;
+    margin: 1vw 0;
+    border: rgb(255, 240, 158) inset 3px;
+    border-radius: 5px;
+  }
+
+  header {
+    margin: 10px 10vw 10vw;
+    
+  }
+  
+  a {
+    /* color: slateblue;
+    text-decoration: none; */
+  }
+  
+  h1 {
+    font-size: 60px;
+    text-align: center;
+    margin: 20px;
+  }
+  
+  select {
+    position: center;
+    color: white;
+    padding: 10px;
+    font-size: 30px;
+    background-color: rgb(13, 197, 22);
+    border: inset 3px rgb(14, 8, 8);
+    border-radius: 10px;
+  }
+  
+  select:hover {
+    background-color: rgb(221, 203, 209);
+    color: skyblue;
+  }
+  
+  main {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+  }
+  
+  #photo-template {
+    display: none;
+  }
+  
+  div {
+    width: 25vw;
+    min-width: 250px;
+    padding: 1vw;
+    border:green outset 5px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    margin: 5 10px 5vw;
+    justify-content: space-around;
+  }
+  
+ 
+
+/* section > img {
     height: 100px;
     width: 100px;
-}
+} */
